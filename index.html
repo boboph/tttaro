@@ -145,6 +145,7 @@
       <button class="tab-btn" onclick="switchTab('reviews')">真实评价</button>
     </div>
 
+    <!-- 关于我 -->
     <div id="tab-about" class="tab-content active">
       <div class="about-content">
         <h3>卜品Origo 咨询指南</h3>
@@ -153,9 +154,9 @@
         <p class="important-bold">（先款后服务，以转账为准，拒绝白嫖。）</p>
         <p>看牌≠情绪疏导，二者分属不同服务。<br>约单以转账为准，口头约定时间不预留，被占概不负责。<br>转账后协商咨询时间，变动请提前告知。<br>咨询中提问越多，挖掘信息越多，挖掘多少取决于你的承受度。<br>咨询结束后，关于此问题的答疑随时可问。<br>深知世界偶有残酷，仍愿你我心怀热爱，向阳而行。</p>
         <div class="contact-row">
-          <!-- 👇 替换为你自己的微信二维码图片链接 👇 -->
+          <!-- 👇👇👇 替换为你自己的微信二维码图片链接 👇👇👇 -->
           <img class="contact-qr" src="wechat.png" alt="微信二维码">
-          <!-- 👆 替换为你自己的微信二维码图片链接 👆 -->
+          <!-- 👆👆👆 替换为你自己的微信二维码图片链接 👆👆👆 -->
           <div class="contact-info">
             <h3>扫码开启咨询<br>期待与您相遇</h3>
             <p>微信号：phboob</p>
@@ -164,6 +165,7 @@
       </div>
     </div>
 
+    <!-- 价目表 -->
     <div id="tab-price" class="tab-content">
       <div class="price-list">
         <div class="price-item"><h4>纯聊天疏导 / 深度问题分析 <span>288/小时</span></h4></div>
@@ -177,6 +179,7 @@
       </div>
     </div>
 
+    <!-- 评价墙 -->
     <div id="tab-reviews" class="tab-content">
       <div class="visitor-feedback-text" id="visitorFeedbackText">加载中…</div>
       <div class="reviews-list" id="reviewsList">
@@ -190,7 +193,7 @@
     </div>
   </div>
 
-  <!-- 弹窗等保持不变，但以下为完整 JS -->
+  <!-- 提交评价弹窗 -->
   <div class="modal-overlay" id="reviewModal" style="display:none;">
     <div class="modal">
       <button class="close-btn" onclick="closeReviewModal()">×</button>
@@ -201,6 +204,8 @@
       <button class="btn btn-primary" id="submitBtn" onclick="submitReview()">提交反馈</button>
     </div>
   </div>
+
+  <!-- 管理登录弹窗 -->
   <div class="modal-overlay" id="adminLoginModal" style="display:none;">
     <div class="modal">
       <button class="close-btn" onclick="closeAdminLogin()">×</button>
@@ -209,6 +214,8 @@
       <button class="btn btn-primary" onclick="adminLogin()">进入后台</button>
     </div>
   </div>
+
+  <!-- 管理面板弹窗 -->
   <div class="modal-overlay" id="adminPanelModal" style="display:none;">
     <div class="modal" style="max-width:440px;">
       <button class="close-btn" onclick="closeAdminPanel()">×</button>
@@ -231,31 +238,30 @@
   </div>
 
   <script>
+    // ========== 你的 Supabase 配置 ==========
     const SUPABASE_URL = 'https://cmvvokqwdpvmkcxxzlgj.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_O8pCMhQmfXxbq8r7IN87Pw_QpY8liuo';
-    const USE_LOCAL_STORAGE = false;
     const ADMIN_PASSWORD = '000000';
 
+    // 通用请求函数
     async function supabaseFetch(path, options = {}) {
       const url = `${SUPABASE_URL}/rest/v1/${path}`;
-      const headers = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...options.headers };
+      const headers = {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation',
+        ...options.headers
+      };
       const res = await fetch(url, { ...options, headers });
       if (!res.ok) throw new Error(`请求失败: ${res.status}`);
       const text = await res.text();
       return text ? JSON.parse(text) : null;
     }
 
-    async function supabaseRPC(functionName, body) {
-      const url = `${SUPABASE_URL}/rest/v1/rpc/${functionName}`;
-      const headers = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' };
-      const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
-      if (!res.ok) throw new Error(`RPC失败: ${res.status}`);
-      const text = await res.text();
-      return text ? JSON.parse(text) : null;
-    }
-
     let isAdmin = false;
 
+    // 标签切换
     function switchTab(tabName) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -264,8 +270,10 @@
       if (tabName === 'reviews') loadReviews();
     }
 
+    // 弹窗控制
     function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = ''; }
+
     function openReviewModal() {
       document.getElementById('reviewContent').value = '';
       document.getElementById('reviewNickname').value = '';
@@ -304,9 +312,10 @@
       setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = '0.3s'; setTimeout(() => toast.remove(), 300); }, 2500);
     }
 
+    // 加载评价
     async function loadReviews() {
       const container = document.getElementById('reviewsList');
-      if (!container) return; // 防止 null 错误
+      if (!container) return;
       container.innerHTML = '<div style="text-align:center;padding:28px;"><div class="loading-spinner"></div></div>';
       try {
         const reviews = await supabaseFetch('reviews?select=*&is_hidden=eq.false&order=is_pinned.desc,created_at.desc&limit=50');
@@ -330,7 +339,11 @@
         const time = formatTime(r.created_at);
         return `<div class="review-card ${r.is_pinned ? 'pinned' : ''}">
           ${r.is_pinned ? '<span class="pinned-badge">置顶</span>' : ''}
-          <div class="review-header"><div class="review-avatar">${initial}</div><span class="review-nickname">${escapeHTML(r.nickname || '匿名')}</span><span class="review-time">${time}</span></div>
+          <div class="review-header">
+            <div class="review-avatar">${initial}</div>
+            <span class="review-nickname">${escapeHTML(r.nickname || '匿名')}</span>
+            <span class="review-time">${time}</span>
+          </div>
           ${r.content ? `<div class="review-content">${escapeHTML(r.content)}</div>` : ''}
         </div>`;
       }).join('');
@@ -358,96 +371,166 @@
       return div.innerHTML;
     }
 
+    // 提交评价（直接操作表）
     async function submitReview() {
-      const code = document.getElementById('inviteCodeInput').value.trim();
+      const code = document.getElementById('inviteCodeInput').value.trim().toUpperCase();
       const nickname = document.getElementById('reviewNickname').value.trim() || '匿名';
       const content = document.getElementById('reviewContent').value.trim();
       const btn = document.getElementById('submitBtn');
+
       if (!code) return showToast('请输入邀请码', 'error');
       if (!content) return showToast('请填写评价内容', 'error');
-      btn.disabled = true; btn.textContent = '提交中…';
+
+      btn.disabled = true;
+      btn.textContent = '提交中…';
       try {
-        const result = await supabaseRPC('submit_review', { p_invite_code: code, p_nickname: nickname, p_rating: 5, p_content: content });
-        if (result?.success) { showToast('反馈提交成功！', 'success'); closeReviewModal(); loadReviews(); }
-        else showToast(result?.message || '邀请码无效或已使用', 'error');
-      } catch (e) { showToast('提交失败，请重试', 'error'); }
-      finally { btn.disabled = false; btn.textContent = '提交反馈'; }
+        // 1. 查找可用邀请码
+        const codes = await supabaseFetch(`invite_codes?code=eq.${encodeURIComponent(code)}&is_used=eq.false&limit=1`);
+        if (!codes || codes.length === 0) {
+          showToast('邀请码无效或已被使用', 'error');
+          btn.disabled = false;
+          btn.textContent = '提交反馈';
+          return;
+        }
+        const inviteId = codes[0].id;
+        // 2. 标记邀请码为已使用
+        await supabaseFetch(`invite_codes?id=eq.${inviteId}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ is_used: true })
+        });
+        // 3. 插入评价
+        await supabaseFetch('reviews', {
+          method: 'POST',
+          body: JSON.stringify({
+            nickname: nickname,
+            rating: 5,
+            content: content,
+            is_hidden: false,
+            is_pinned: false
+          })
+        });
+
+        showToast('反馈提交成功！', 'success');
+        closeReviewModal();
+        loadReviews();
+      } catch (e) {
+        console.error(e);
+        showToast('提交失败，请重试', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '提交反馈';
+      }
     }
 
+    // 管理员登录
     function adminLogin() {
-      if (document.getElementById('adminPassword').value === ADMIN_PASSWORD) { isAdmin = true; showToast('已进入管理后台', 'success'); openAdminPanel(); }
-      else showToast('密码错误', 'error');
+      if (document.getElementById('adminPassword').value === ADMIN_PASSWORD) {
+        isAdmin = true;
+        showToast('已进入管理后台', 'success');
+        openAdminPanel();
+      } else {
+        showToast('密码错误', 'error');
+      }
     }
 
+    // 加载管理数据
     async function loadAdminData() {
       try {
         const codes = await supabaseFetch('invite_codes?select=*&order=created_at.desc&limit=100');
         const reviews = await supabaseFetch('reviews?select=*&order=created_at.desc&limit=100');
-        renderAllCodes(codes || []); renderAdminReviews(reviews || []);
-      } catch (e) { showToast('加载管理数据失败', 'error'); }
+        renderAllCodes(codes || []);
+        renderAdminReviews(reviews || []);
+      } catch (e) {
+        showToast('加载管理数据失败', 'error');
+      }
     }
 
     function renderAllCodes(codes) {
       const el = document.getElementById('allCodesList');
       if (!el) return;
-      el.innerHTML = codes.length ? codes.map(c => `<span class="code-tag ${c.is_used?'used':''}" onclick="copyCode('${c.code}')">${c.code}${c.is_used?' (已用)':''}</span>`).join('') : '暂无邀请码';
+      el.innerHTML = codes.length
+        ? codes.map(c => `<span class="code-tag ${c.is_used?'used':''}" onclick="copyCode('${c.code}')">${c.code}${c.is_used?' (已用)':''}</span>`).join('')
+        : '暂无邀请码';
     }
 
     function renderAdminReviews(reviews) {
       const container = document.getElementById('adminReviewsList');
       if (!container) return;
-      if (!reviews.length) { container.innerHTML = '<div style="padding:8px;color:#999;">暂无评价</div>'; return; }
+      if (!reviews.length) {
+        container.innerHTML = '<div style="padding:8px;color:#999;">暂无评价</div>';
+        return;
+      }
       container.innerHTML = reviews.map(r => `
         <div class="admin-review-row">
-          <div class="admin-review-info"><b>${escapeHTML(r.nickname||'匿名')}</b>${r.is_pinned?'<span class="pin-indicator">📌置顶</span>':''}<span style="color:#999;font-size:0.7rem;margin-left:6px;">${formatTime(r.created_at)}</span>${r.is_hidden?'<span style="color:#e65050;font-size:0.65rem;">[已隐藏]</span>':''}<div style="font-size:0.8rem;color:#555;">${escapeHTML((r.content||'').substring(0,30))}…</div></div>
+          <div class="admin-review-info">
+            <b>${escapeHTML(r.nickname||'匿名')}</b>
+            ${r.is_pinned?'<span class="pin-indicator">📌置顶</span>':''}
+            <span style="color:#999;font-size:0.7rem;margin-left:6px;">${formatTime(r.created_at)}</span>
+            ${r.is_hidden?'<span style="color:#e65050;font-size:0.65rem;">[已隐藏]</span>':''}
+            <div style="font-size:0.8rem;color:#555;">${escapeHTML((r.content||'').substring(0,30))}…</div>
+          </div>
           <div class="admin-review-actions">
             <button class="btn btn-sm ${r.is_pinned?'btn-pin':'btn-outline'}" onclick="togglePin(${r.id},${r.is_pinned})">${r.is_pinned?'取消置顶':'置顶'}</button>
             <button class="btn btn-sm ${r.is_hidden?'btn-outline':'btn-danger'}" onclick="toggleHidden(${r.id},${r.is_hidden})">${r.is_hidden?'显示':'隐藏'}</button>
             <button class="btn btn-sm btn-warning" onclick="deleteReview(${r.id})">删除</button>
           </div>
-        </div>`).join('');
+        </div>
+      `).join('');
     }
 
     async function togglePin(id, current) {
       await supabaseFetch(`reviews?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ is_pinned: !current }) });
-      loadAdminData(); loadReviews(); showToast(current ? '已取消置顶' : '已置顶', 'success');
+      loadAdminData(); loadReviews();
+      showToast(current ? '已取消置顶' : '已置顶', 'success');
     }
 
     async function toggleHidden(id, current) {
       await supabaseFetch(`reviews?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ is_hidden: !current }) });
-      loadAdminData(); loadReviews(); showToast(current ? '评价已显示' : '评价已隐藏', 'success');
+      loadAdminData(); loadReviews();
+      showToast(current ? '评价已显示' : '评价已隐藏', 'success');
     }
 
     async function deleteReview(id) {
       if (!confirm('确定要永久删除这条评价吗？')) return;
       await supabaseFetch(`reviews?id=eq.${id}`, { method: 'DELETE' });
-      showToast('评价已删除', 'success'); loadAdminData(); loadReviews();
+      showToast('评价已删除', 'success');
+      loadAdminData(); loadReviews();
     }
 
+    // 生成邀请码
     async function generateInviteCodes() {
       const count = Math.min(20, Math.max(1, parseInt(document.getElementById('genCodeCount').value) || 5));
       const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
       const newCodes = [];
-      for (let i=0; i<count; i++) {
+      for (let i = 0; i < count; i++) {
         let code = '';
-        for (let j=0; j<4; j++) code += chars[Math.floor(Math.random() * chars.length)];
+        for (let j = 0; j < 4; j++) code += chars[Math.floor(Math.random() * chars.length)];
         newCodes.push({ code, is_used: false });
       }
       try {
         const result = await supabaseFetch('invite_codes', { method: 'POST', body: JSON.stringify(newCodes) });
         const createdCodes = result || newCodes;
         document.getElementById('newCodesList').innerHTML = createdCodes.map(c => `<span class="code-tag" onclick="copyCode('${c.code}')">${c.code}</span>`).join('');
-        showToast(`已生成 ${createdCodes.length} 个邀请码`, 'success'); loadAdminData();
-      } catch (e) { showToast('生成失败，请重试', 'error'); }
+        showToast(`已生成 ${createdCodes.length} 个邀请码`, 'success');
+        loadAdminData();
+      } catch (e) {
+        showToast('生成失败，请重试', 'error');
+      }
     }
 
     function copyCode(code) {
       navigator.clipboard?.writeText(code).then(() => showToast('已复制: ' + code)).catch(() => {
-        const ta = document.createElement('textarea'); ta.value = code; document.body.appendChild(ta); ta.select();
-        document.execCommand('copy'); document.body.removeChild(ta); showToast('已复制');
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('已复制');
       });
     }
 
+    // 启动加载评价
     loadReviews();
   </script>
 </body>
