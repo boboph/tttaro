@@ -1,377 +1,271 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>卜品Origo · 真实评价</title>
+  <style>
+    :root {
+      --brand-green: #07C160; --text-primary: #1a1a1a; --text-secondary: #6b6b6b;
+      --border: #e5e5e5; --radius: 16px; --font-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --size-body: 0.9rem; --size-small: 0.8rem; --size-brand: 1.8rem; --size-tagline: 0.95rem; --size-tab: 0.85rem;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-sans); background: #f9fafb; color: var(--text-primary); min-height: 100vh; line-height: 1.7; display: flex; flex-direction: column; align-items: center; }
+    .container { width: 100%; max-width: 480px; padding: 0 20px 40px; margin: 0 auto; }
+    .header { text-align: center; padding: 32px 20px 8px; }
+    .brand-name { font-size: var(--size-brand); font-weight: 700; color: #0f0f0f; margin-bottom: 8px; }
+    .brand-tagline { font-size: var(--size-tagline); color: var(--text-secondary); margin-bottom: 12px; }
+    .tab-switch { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .tab-btn { padding: 8px 14px; border-radius: 32px; font-size: var(--size-tab); font-weight: 600; background: white; border: 1px solid var(--border); color: var(--text-secondary); text-decoration: none; white-space: nowrap; }
+    .tab-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); }
+    .reviews-list { display: flex; flex-direction: column; gap: 12px; }
+    .review-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
+    .review-card.pinned { border-left: 4px solid var(--brand-green); background: #fafdf8; }
+    .pinned-badge { background: var(--brand-green); color: white; font-size: 0.65rem; padding: 3px 10px; border-radius: 12px; }
+    .review-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .review-avatar { width: 38px; height: 38px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+    .review-nickname { font-weight: 600; }
+    .review-time { margin-left: auto; font-size: 0.7rem; color: #aaa; }
+    .review-content { font-size: var(--size-body); color: #3a3a3a; line-height: 1.65; white-space: pre-wrap; word-break: break-word; }
+    .submit-area { margin-top: 32px; display: flex; justify-content: center; }
+    .btn-submit { background: var(--brand-green); color: white; border: none; border-radius: 36px; padding: 15px 40px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; max-width: 260px; }
+    .admin-entry { text-align: center; margin-top: 36px; }
+    .admin-link { font-size: 0.65rem; color: #ccc; background: none; border: none; cursor: pointer; }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .modal { background: white; border-radius: var(--radius); padding: 28px 22px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; position: relative; }
+    .modal h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; text-align: center; }
+    .close-btn { position: absolute; top: 12px; right: 18px; background: none; border: none; font-size: 28px; color: #999; cursor: pointer; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.85rem; color: #555; margin-bottom: 8px; }
+    .form-group textarea, .form-group input { width: 100%; padding: 14px 16px; border: 1px solid #ddd; border-radius: 12px; font-size: 0.95rem; font-family: inherit; background: #fafafa; }
+    .btn { border: none; border-radius: 28px; padding: 13px 28px; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
+    .btn-primary { background: var(--brand-green); color: white; width: 100%; }
+    .btn-sm { padding: 6px 14px; font-size: 0.7rem; border-radius: 16px; }
+    .btn-danger { background: #e65050; color: white; }
+    .btn-warning { background: #f0ad4e; color: white; }
+    .btn-pin { background: #8e44ad; color: white; }
+    .btn-outline { background: white; border: 1px solid #ddd; color: #333; }
+    .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 200; padding: 12px 28px; border-radius: 34px; font-size: 0.9rem; background: #333; color: white; }
+    .toast-success { background: #07C160; }
+    .toast-error { background: #e64340; }
+    .admin-section { background: #f8f9fa; border-radius: 14px; padding: 18px; margin-bottom: 18px; border: 1px solid #eee; }
+    .code-tag { display: inline-block; background: #eef6ee; border: 1px solid #c8e6c9; padding: 5px 12px; border-radius: 18px; font-size: 0.75rem; font-family: monospace; margin: 5px; color: #1e4620; cursor: pointer; }
+    .code-tag.used { background: #f0f0f0; border-color: #ddd; color: #999; text-decoration: line-through; }
+    .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid #ddd; border-top-color: var(--brand-green); border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .admin-review-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; gap: 8px; flex-wrap: wrap; }
+    .admin-review-info { flex: 1 1 180px; min-width: 0; font-size: 0.85rem; }
+    .admin-review-actions { display: flex; gap: 5px; flex-wrap: wrap; }
+    .pin-indicator { color: #8e44ad; font-size: 0.65rem; font-weight: 600; margin-left: 5px; }
   </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="zh-CN"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;卜品Origo · 真实评价&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>:root {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--bg: #ffffff; --text-primary: #1a1a1a; --text-secondary: #6b6b6b; --text-muted: #9a9a9a;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--brand-green: #07C160; --brand-green-hover: #06ad56; --border: #e5e5e5;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--shadow: 0 4px 16px rgba(0,0,0,0.04); --radius: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--size-title: 1.2rem; --size-subtitle: 1.05rem; --size-body: 0.9rem; --size-small: 0.8rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--size-brand: 1.8rem; --size-tagline: 0.95rem; --size-tab: 0.85rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--line-height-relaxed: 1.75; --letter-spacing-base: 0.02em;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>* { margin: 0; padding: 0; box-sizing: border-box; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: var(--font-sans); background: #f9fafb; color: var(--text-primary);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>min-height: 100vh; line-height: var(--line-height-relaxed); letter-spacing: var(--letter-spacing-base);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>-webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex; flex-direction: column; align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.container { width: 100%; max-width: 480px; padding: 0 20px 40px; margin: 0 auto; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.header { text-align: center; padding: 32px 20px 8px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.brand-name { font-size: var(--size-brand); font-weight: 700; letter-spacing: 0.05em; color: #0f0f0f; margin-bottom: 8px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.brand-tagline { font-size: var(--size-tagline); color: var(--text-secondary); letter-spacing: 0.03em; margin-bottom: 12px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.tab-switch { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: nowrap; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.tab-btn {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 8px 14px; border-radius: 32px; font-size: var(--size-tab); font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: white; border: 1px solid var(--border); color: var(--text-secondary);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>letter-spacing: 0.02em; cursor: pointer; transition: all 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>-webkit-tap-highlight-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.02);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>white-space: nowrap; text-decoration: none; display: inline-block;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.tab-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.visitor-feedback-text { font-size: var(--size-small); color: var(--text-secondary); margin-bottom: 20px; text-align: center; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.reviews-list { display: flex; flex-direction: column; gap: 12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.review-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 16px; box-shadow: var(--shadow); transition: all 0.2s; position: relative; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.review-card.pinned { border-left: 4px solid var(--brand-green); background: #fafdf8; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.pinned-badge { position: absolute; top: 10px; right: 10px; background: var(--brand-green); color: white; font-size: 0.65rem; padding: 3px 10px; border-radius: 12px; font-weight: 500; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.review-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.review-avatar { width: 38px; height: 38px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem; color: #4a4a4a; flex-shrink: 0; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.review-nickname { font-weight: 600; font-size: 0.95rem; color: #1f1f1f; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.review-time { margin-left: auto; font-size: 0.7rem; color: #aaa; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.review-content { font-size: var(--size-body); color: #3a3a3a; line-height: 1.65; white-space: pre-wrap; word-break: break-word; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.empty-reviews { text-align: center; padding: 30px 20px; color: #aaa; font-size: var(--size-small); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.submit-area { margin-top: 32px; display: flex; justify-content: center; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn-submit { background: var(--brand-green); color: white; border: none; border-radius: 36px; padding: 15px 40px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; box-shadow: 0 4px 14px rgba(7,193,96,0.2); width: 100%; max-width: 260px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.admin-entry { text-align: center; margin-top: 36px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.admin-link { font-size: 0.65rem; color: #ccc; background: none; border: none; cursor: pointer; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; animation: fadeIn 0.2s ease; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.modal { background: white; border-radius: var(--radius); padding: 28px 22px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.modal h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; text-align: center; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.close-btn { position: absolute; top: 12px; right: 18px; background: none; border: none; font-size: 28px; color: #999; cursor: pointer; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.form-group { margin-bottom: 18px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.form-group label { display: block; font-size: 0.85rem; color: #555; margin-bottom: 8px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.form-group textarea, .form-group input { width: 100%; padding: 14px 16px; border: 1px solid #ddd; border-radius: 12px; font-size: 0.95rem; font-family: inherit; background: #fafafa; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn { border: none; border-radius: 28px; padding: 13px 28px; font-size: 0.95rem; font-weight: 600; cursor: pointer; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn-primary { background: var(--brand-green); color: white; width: 100%; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn-sm { padding: 6px 14px; font-size: 0.7rem; border-radius: 16px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn-danger { background: #e65050; color: white; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn-warning { background: #f0ad4e; color: white; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn-pin { background: #8e44ad; color: white; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn-outline { background: white; border: 1px solid #ddd; color: #333; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 200; padding: 12px 28px; border-radius: 34px; font-size: 0.9rem; background: #333; color: white; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.toast-success { background: #07C160; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.toast-error { background: #e64340; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.admin-section { background: #f8f9fa; border-radius: 14px; padding: 18px; margin-bottom: 18px; border: 1px solid #eee; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.code-tag { display: inline-block; background: #eef6ee; border: 1px solid #c8e6c9; padding: 5px 12px; border-radius: 18px; font-size: 0.75rem; font-family: monospace; margin: 5px; color: #1e4620; cursor: pointer; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.code-tag.used { background: #f0f0f0; border-color: #ddd; color: #999; text-decoration: line-through; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid #ddd; border-top-color: var(--brand-green); border-radius: 50%; animation: spin 0.7s linear infinite; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@keyframes spin { to { transform: rotate(360deg); } }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.admin-review-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; gap: 8px; flex-wrap: wrap; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.admin-review-info { flex: 1 1 180px; min-width: 0; font-size: 0.85rem; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.admin-review-actions { display: flex; gap: 5px; flex-wrap: wrap; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.pin-indicator { color: #8e44ad; font-size: 0.65rem; font-weight: 600; margin-left: 5px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="header"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="brand-name"&gt;卜品Origo&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="brand-tagline"&gt;感谢选择相信，在这里每一次反馈都是真实的遇见。&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab-switch"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a href="index.html" class="tab-btn"&gt;关于我&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a href="price.html" class="tab-btn"&gt;价目表&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a href="reviews.html" class="tab-btn active"&gt;真实评价&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="visitor-feedback-text" id="visitorFeedbackText"&gt;加载中…&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="reviews-list" id="reviewsList"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="text-align:center;padding:28px;color:#999;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="loading-spinner"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p style="margin-top:10px;font-size:0.85rem;"&gt;加载评价中…&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="submit-area"&gt;&lt;button class="btn-submit" onclick="openReviewModal()"&gt;留下您的反馈&lt;/button&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="admin-entry"&gt;&lt;button class="admin-link" onclick="openAdminLogin()"&gt;管理&lt;/button&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- 提交评价弹窗 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal-overlay" id="reviewModal" style="display:none;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="close-btn" onclick="closeReviewModal()"&gt;×&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;请为此次咨询留下您的真实感受&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label&gt;评价内容 &lt;span style="color:#e65050;"&gt;*&lt;/span&gt;&lt;/label&gt;&lt;textarea id="reviewContent" placeholder="分享您的真实感受……" maxlength="500" required&gt;&lt;/textarea&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label&gt;昵称 (选填)&lt;/label&gt;&lt;input type="text" id="reviewNickname" placeholder="如何称呼您，不填则为匿名" maxlength="20"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label&gt;邀请码 (保证每一次反馈都可靠有效) &lt;span style="color:#e65050;"&gt;*&lt;/span&gt;&lt;/label&gt;&lt;input type="text" id="inviteCodeInput" placeholder="请输入邀请码" maxlength="20" autocomplete="off" style="text-transform:uppercase;font-family:monospace;"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-primary" id="submitBtn" onclick="submitReview()"&gt;提交反馈&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- 管理登录弹窗 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal-overlay" id="adminLoginModal" style="display:none;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="close-btn" onclick="closeAdminLogin()"&gt;×&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;管理员登录&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label&gt;密码&lt;/label&gt;&lt;input type="password" id="adminPassword" placeholder=""&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-primary" onclick="adminLogin()"&gt;进入后台&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- 管理面板弹窗 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal-overlay" id="adminPanelModal" style="display:none;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal" style="max-width:440px;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="close-btn" onclick="closeAdminPanel()"&gt;×&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;管理后台&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="admin-section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3 style="font-size:0.9rem;margin-bottom:10px;"&gt;生成邀请码 (4位字母数字)&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;gap:10px;align-items:center;"&gt;&lt;input type="number" id="genCodeCount" value="5" min="1" max="20" style="width:70px;padding:10px;border:1px solid #ddd;border-radius:10px;text-align:center;"&gt;&lt;button class="btn btn-sm btn-primary" onclick="generateInviteCodes()"&gt;生成&lt;/button&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="newCodesList" style="margin-top:12px;min-height:24px;"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="admin-section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3 style="font-size:0.9rem;margin-bottom:10px;"&gt;所有邀请码&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="allCodesList" style="max-height:150px;overflow-y:auto;"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="admin-section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3 style="font-size:0.9rem;margin-bottom:10px;"&gt;评价管理&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="adminReviewsList" style="max-height:350px;overflow-y:auto;"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-outline btn-sm" style="width:100%;margin-top:12px;" onclick="closeAdminPanel()"&gt;关闭&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const SUPABASE_URL = 'https://cmvvokqwdpvmkcxxzlgj.supabase.co';</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const SUPABASE_ANON_KEY = 'sb_publishable_O8pCMhQmfXxbq8r7IN87Pw_QpY8liuo';</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const ADMIN_PASSWORD = '000000';</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>async function supabaseFetch(path, options = {}) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const url = `${SUPABASE_URL}/rest/v1/${path}`;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const headers = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...options.headers };</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const res = await fetch(url, { ...options, headers });</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!res.ok) throw new Error(`请求失败: ${res.status}`);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const text = await res.text();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return text ? JSON.parse(text) : null;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>let isAdmin = false;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = ''; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function openReviewModal() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('reviewContent').value = '';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('reviewNickname').value = '';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('inviteCodeInput').value = '';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('submitBtn').disabled = false;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('submitBtn').textContent = '提交反馈';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>openModal('reviewModal');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>function closeReviewModal() { closeModal('reviewModal'); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>function openAdminLogin() { document.getElementById('adminPassword').value = ''; openModal('adminLoginModal'); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>function closeAdminLogin() { closeModal('adminLoginModal'); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>function openAdminPanel() { closeModal('adminLoginModal'); openModal('adminPanelModal'); loadAdminData(); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>function closeAdminPanel() { closeModal('adminPanelModal'); isAdmin = false; loadReviews(); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.addEventListener('click', (e) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (e.target.classList.contains('modal-overlay')) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const id = e.target.id;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (id === 'reviewModal') closeReviewModal();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (id === 'adminLoginModal') closeAdminLogin();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (id === 'adminPanelModal') closeAdminPanel();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function showToast(msg, type = 'info') {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const toast = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>toast.className = `toast ${type === 'success' ? 'toast-success' : type === 'error' ? 'toast-error' : ''}`;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>toast.textContent = msg;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.body.appendChild(toast);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>setTimeout(() =&gt; { toast.style.opacity = '0'; toast.style.transition = '0.3s'; setTimeout(() =&gt; toast.remove(), 300); }, 2500);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>async function loadReviews() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const container = document.getElementById('reviewsList');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!container) return;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>container.innerHTML = '&lt;div style="text-align:center;padding:28px;"&gt;&lt;div class="loading-spinner"&gt;&lt;/div&gt;&lt;/div&gt;';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const reviews = await supabaseFetch('reviews?select=*&amp;is_hidden=eq.false&amp;order=is_pinned.desc,created_at.desc&amp;limit=50');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>renderReviews(reviews || []);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>updateVisitorCount((reviews || []).length);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} catch (e) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>container.innerHTML = '&lt;div class="empty-reviews"&gt;暂时无法加载评价，请稍后再试&lt;/div&gt;';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('visitorFeedbackText').textContent = '';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function renderReviews(reviews) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const container = document.getElementById('reviewsList');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!container) return;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!reviews.length) { container.innerHTML = '&lt;div class="empty-reviews"&gt;暂无反馈，期待你的第一条真实感受&lt;/div&gt;'; return; }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>container.innerHTML = reviews.map(r =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const initial = (r.nickname || '匿')[0].toUpperCase();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const time = formatTime(r.created_at);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>return `&lt;div class="review-card ${r.is_pinned ? 'pinned' : ''}"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>${r.is_pinned ? '&lt;span class="pinned-badge"&gt;置顶&lt;/span&gt;' : ''}</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="review-header"&gt;&lt;div class="review-avatar"&gt;${initial}&lt;/div&gt;&lt;span class="review-nickname"&gt;${escapeHTML(r.nickname || '匿名')}&lt;/span&gt;&lt;span class="review-time"&gt;${time}&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>${r.content ? `&lt;div class="review-content"&gt;${escapeHTML(r.content)}&lt;/div&gt;` : ''}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}).join('');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function updateVisitorCount(count) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const el = document.getElementById('visitorFeedbackText');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (el) el.textContent = count &gt; 0 ? `已有${count}位来访者，在这里留下他们的反馈。` : '期待第一位来访者的反馈';</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function formatTime(d) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!d) return '';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const n = new Date(), diff = n - new Date(d);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const m = Math.floor(diff/60000), h = Math.floor(diff/3600000), day = Math.floor(diff/86400000);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (m&lt;1) return '刚刚';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (m&lt;60) return m+'分钟前';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (h&lt;24) return h+'小时前';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (day&lt;30) return day+'天前';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return `${new Date(d).getFullYear()}-${String(new Date(d).getMonth()+1).padStart(2,'0')}-${String(new Date(d).getDate()).padStart(2,'0')}`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function escapeHTML(s) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const div = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>div.textContent = s;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return div.innerHTML;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>async function submitReview() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const code = document.getElementById('inviteCodeInput').value.trim().toUpperCase();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const nickname = document.getElementById('reviewNickname').value.trim() || '匿名';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const content = document.getElementById('reviewContent').value.trim();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const btn = document.getElementById('submitBtn');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!code) return showToast('请输入邀请码', 'error');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!content) return showToast('请填写评价内容', 'error');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>btn.disabled = true; btn.textContent = '提交中…';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const codes = await supabaseFetch(`invite_codes?code=eq.${encodeURIComponent(code)}&amp;is_used=eq.false&amp;limit=1`);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (!codes || codes.length === 0) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>showToast('邀请码无效或已被使用', 'error');</p>
-<p class="p1"><span class="Apple-converted-space">          </span>btn.disabled = false; btn.textContent = '提交反馈';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>return;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const inviteId = codes[0].id;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>await supabaseFetch(`invite_codes?id=eq.${inviteId}`, { method: 'PATCH', body: JSON.stringify({ is_used: true }) });</p>
-<p class="p1"><span class="Apple-converted-space">        </span>await supabaseFetch('reviews', { method: 'POST', body: JSON.stringify({ nickname, rating: 5, content, is_hidden: false, is_pinned: false }) });</p>
-<p class="p1"><span class="Apple-converted-space">        </span>showToast('反馈提交成功！', 'success');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>closeReviewModal();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>loadReviews();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} catch (e) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>console.error(e);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>showToast('提交失败，请重试', 'error');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} finally {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>btn.disabled = false; btn.textContent = '提交反馈';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function adminLogin() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (document.getElementById('adminPassword').value === ADMIN_PASSWORD) { isAdmin = true; showToast('已进入管理后台', 'success'); openAdminPanel(); }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>else showToast('密码错误', 'error');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>async function loadAdminData() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const codes = await supabaseFetch('invite_codes?select=*&amp;order=created_at.desc&amp;limit=100');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const reviews = await supabaseFetch('reviews?select=*&amp;order=created_at.desc&amp;limit=100');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>renderAllCodes(codes || []); renderAdminReviews(reviews || []);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} catch (e) { showToast('加载管理数据失败', 'error'); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function renderAllCodes(codes) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const el = document.getElementById('allCodesList');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!el) return;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>el.innerHTML = codes.length ? codes.map(c =&gt; `&lt;span class="code-tag ${c.is_used?'used':''}" onclick="copyCode('${c.code}')"&gt;${c.code}${c.is_used?' (已用)':''}&lt;/span&gt;`).join('') : '暂无邀请码';</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function renderAdminReviews(reviews) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const container = document.getElementById('adminReviewsList');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!container) return;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!reviews.length) { container.innerHTML = '&lt;div style="padding:8px;color:#999;"&gt;暂无评价&lt;/div&gt;'; return; }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>container.innerHTML = reviews.map(r =&gt; `</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="admin-review-row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="admin-review-info"&gt;&lt;b&gt;${escapeHTML(r.nickname||'匿名')}&lt;/b&gt;${r.is_pinned?'&lt;span class="pin-indicator"&gt;📌置顶&lt;/span&gt;':''}&lt;span style="color:#999;font-size:0.7rem;margin-left:6px;"&gt;${formatTime(r.created_at)}&lt;/span&gt;${r.is_hidden?'&lt;span style="color:#e65050;font-size:0.65rem;"&gt;[已隐藏]&lt;/span&gt;':''}&lt;div style="font-size:0.8rem;color:#555;"&gt;${escapeHTML((r.content||'').substring(0,30))}…&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="admin-review-actions"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-sm ${r.is_pinned?'btn-pin':'btn-outline'}" onclick="togglePin(${r.id},${r.is_pinned})"&gt;${r.is_pinned?'取消置顶':'置顶'}&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-sm ${r.is_hidden?'btn-outline':'btn-danger'}" onclick="toggleHidden(${r.id},${r.is_hidden})"&gt;${r.is_hidden?'显示':'隐藏'}&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-sm btn-warning" onclick="deleteReview(${r.id})"&gt;删除&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;`).join('');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>async function togglePin(id, current) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>await supabaseFetch(`reviews?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ is_pinned: !current }) });</p>
-<p class="p1"><span class="Apple-converted-space">      </span>loadAdminData(); loadReviews(); showToast(current ? '已取消置顶' : '已置顶', 'success');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>async function toggleHidden(id, current) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>await supabaseFetch(`reviews?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ is_hidden: !current }) });</p>
-<p class="p1"><span class="Apple-converted-space">      </span>loadAdminData(); loadReviews(); showToast(current ? '评价已显示' : '评价已隐藏', 'success');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>async function deleteReview(id) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!confirm('确定要永久删除这条评价吗？')) return;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>await supabaseFetch(`reviews?id=eq.${id}`, { method: 'DELETE' });</p>
-<p class="p1"><span class="Apple-converted-space">      </span>showToast('评价已删除', 'success'); loadAdminData(); loadReviews();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>async function generateInviteCodes() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const count = Math.min(20, Math.max(1, parseInt(document.getElementById('genCodeCount').value) || 5));</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const newCodes = [];</p>
-<p class="p1"><span class="Apple-converted-space">      </span>for (let i = 0; i &lt; count; i++) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>let code = '';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>for (let j = 0; j &lt; 4; j++) code += chars[Math.floor(Math.random() * chars.length)];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>newCodes.push({ code, is_used: false });</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const result = await supabaseFetch('invite_codes', { method: 'POST', body: JSON.stringify(newCodes) });</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const createdCodes = result || newCodes;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('newCodesList').innerHTML = createdCodes.map(c =&gt; `&lt;span class="code-tag" onclick="copyCode('${c.code}')"&gt;${c.code}&lt;/span&gt;`).join('');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>showToast(`已生成 ${createdCodes.length} 个邀请码`, 'success'); loadAdminData();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} catch (e) { showToast('生成失败，请重试', 'error'); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function copyCode(code) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>navigator.clipboard?.writeText(code).then(() =&gt; showToast('已复制: ' + code)).catch(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const ta = document.createElement('textarea'); ta.value = code; document.body.appendChild(ta); ta.select();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.execCommand('copy'); document.body.removeChild(ta); showToast('已复制');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>loadReviews();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+  <div class="container">
+    <div class="header">
+      <div class="brand-name">卜品Origo</div>
+      <div class="brand-tagline">感谢选择相信，在这里每一次反馈都是真实的遇见。</div>
+    </div>
+    <div class="tab-switch">
+      <a href="index.html" class="tab-btn">关于我</a>
+      <a href="price.html" class="tab-btn">价目表</a>
+      <a href="reviews.html" class="tab-btn active">真实评价</a>
+    </div>
+    <div class="visitor-feedback-text" id="visitorFeedbackText">加载中…</div>
+    <div class="reviews-list" id="reviewsList">
+      <div style="text-align:center;padding:28px;color:#999;"><div class="loading-spinner"></div><p>加载评价中…</p></div>
+    </div>
+    <div class="submit-area"><button class="btn-submit" onclick="openReviewModal()">留下您的反馈</button></div>
+    <div class="admin-entry"><button class="admin-link" onclick="openAdminLogin()">管理</button></div>
+  </div>
+
+  <div class="modal-overlay" id="reviewModal" style="display:none;">
+    <div class="modal">
+      <button class="close-btn" onclick="closeReviewModal()">×</button>
+      <h2>请为此次咨询留下您的真实感受</h2>
+      <div class="form-group"><label>评价内容 <span style="color:#e65050;">*</span></label><textarea id="reviewContent" placeholder="分享您的真实感受……" maxlength="500" required></textarea></div>
+      <div class="form-group"><label>昵称 (选填)</label><input type="text" id="reviewNickname" placeholder="如何称呼您，不填则为匿名" maxlength="20"></div>
+      <div class="form-group"><label>邀请码 <span style="color:#e65050;">*</span></label><input type="text" id="inviteCodeInput" placeholder="请输入邀请码" maxlength="20" autocomplete="off" style="text-transform:uppercase;font-family:monospace;"></div>
+      <button class="btn btn-primary" id="submitBtn" onclick="submitReview()">提交反馈</button>
+    </div>
+  </div>
+  <div class="modal-overlay" id="adminLoginModal" style="display:none;">
+    <div class="modal">
+      <button class="close-btn" onclick="closeAdminLogin()">×</button>
+      <h2>管理员登录</h2>
+      <div class="form-group"><label>密码</label><input type="password" id="adminPassword" placeholder=""></div>
+      <button class="btn btn-primary" onclick="adminLogin()">进入后台</button>
+    </div>
+  </div>
+  <div class="modal-overlay" id="adminPanelModal" style="display:none;">
+    <div class="modal" style="max-width:440px;">
+      <button class="close-btn" onclick="closeAdminPanel()">×</button>
+      <h2>管理后台</h2>
+      <div class="admin-section">
+        <h3>生成邀请码</h3>
+        <div style="display:flex;gap:10px;"><input type="number" id="genCodeCount" value="5" min="1" max="20" style="width:70px;padding:10px;"><button class="btn btn-sm btn-primary" onclick="generateInviteCodes()">生成</button></div>
+        <div id="newCodesList" style="margin-top:12px;"></div>
+      </div>
+      <div class="admin-section">
+        <h3>所有邀请码</h3>
+        <div id="allCodesList" style="max-height:150px;overflow-y:auto;"></div>
+      </div>
+      <div class="admin-section">
+        <h3>评价管理</h3>
+        <div id="adminReviewsList" style="max-height:350px;overflow-y:auto;"></div>
+      </div>
+      <button class="btn btn-outline btn-sm" style="width:100%;margin-top:12px;" onclick="closeAdminPanel()">关闭</button>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://cmvvokqwdpvmkcxxzlgj.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_O8pCMhQmfXxbq8r7IN87Pw_QpY8liuo';
+    const ADMIN_PASSWORD = '000000';
+
+    async function supabaseFetch(path, options = {}) {
+      const url = `${SUPABASE_URL}/rest/v1/${path}`;
+      const headers = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...options.headers };
+      const res = await fetch(url, { ...options, headers });
+      if (!res.ok) throw new Error(`请求失败: ${res.status}`);
+      return res.json();
+    }
+
+    let isAdmin = false;
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = ''; }
+    function openReviewModal() {
+      document.getElementById('reviewContent').value = '';
+      document.getElementById('reviewNickname').value = '';
+      document.getElementById('inviteCodeInput').value = '';
+      openModal('reviewModal');
+    }
+    function closeReviewModal() { closeModal('reviewModal'); }
+    function openAdminLogin() { openModal('adminLoginModal'); }
+    function closeAdminLogin() { closeModal('adminLoginModal'); }
+    function openAdminPanel() { closeModal('adminLoginModal'); openModal('adminPanelModal'); loadAdminData(); }
+    function closeAdminPanel() { closeModal('adminPanelModal'); loadReviews(); }
+
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) {
+        if (e.target.id === 'reviewModal') closeReviewModal();
+        if (e.target.id === 'adminLoginModal') closeAdminLogin();
+        if (e.target.id === 'adminPanelModal') closeAdminPanel();
+      }
+    });
+
+    function showToast(msg, type) {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2500);
+    }
+
+    async function loadReviews() {
+      const container = document.getElementById('reviewsList');
+      try {
+        const reviews = await supabaseFetch('reviews?select=*&is_hidden=eq.false&order=is_pinned.desc,created_at.desc&limit=50');
+        if (!reviews.length) {
+          container.innerHTML = '<div class="empty-reviews">暂无反馈，期待你的第一条真实感受</div>';
+          return;
+        }
+        container.innerHTML = reviews.map(r => {
+          const initial = (r.nickname || '匿')[0].toUpperCase();
+          const time = new Date(r.created_at).toLocaleDateString();
+          return `<div class="review-card ${r.is_pinned ? 'pinned' : ''}">
+            ${r.is_pinned ? '<span class="pinned-badge">置顶</span>' : ''}
+            <div class="review-header"><div class="review-avatar">${initial}</div><span class="review-nickname">${r.nickname || '匿名'}</span><span class="review-time">${time}</span></div>
+            <div class="review-content">${r.content}</div>
+          </div>`;
+        }).join('');
+        document.getElementById('visitorFeedbackText').textContent = `已有${reviews.length}位来访者，在这里留下他们的反馈。`;
+      } catch (e) {
+        container.innerHTML = '<div class="empty-reviews">加载失败，请稍后再试</div>';
+      }
+    }
+
+    async function submitReview() {
+      const code = document.getElementById('inviteCodeInput').value.trim().toUpperCase();
+      const nickname = document.getElementById('reviewNickname').value.trim() || '匿名';
+      const content = document.getElementById('reviewContent').value.trim();
+      if (!code) return showToast('请输入邀请码', 'error');
+      if (!content) return showToast('请填写评价内容', 'error');
+      try {
+        const codes = await supabaseFetch(`invite_codes?code=eq.${encodeURIComponent(code)}&is_used=eq.false&limit=1`);
+        if (!codes.length) return showToast('邀请码无效或已被使用', 'error');
+        await supabaseFetch(`invite_codes?id=eq.${codes[0].id}`, { method: 'PATCH', body: JSON.stringify({ is_used: true }) });
+        await supabaseFetch('reviews', { method: 'POST', body: JSON.stringify({ nickname, rating: 5, content, is_hidden: false, is_pinned: false }) });
+        showToast('反馈提交成功！', 'success');
+        closeReviewModal();
+        loadReviews();
+      } catch (e) {
+        showToast('提交失败，请重试', 'error');
+      }
+    }
+
+    function adminLogin() {
+      if (document.getElementById('adminPassword').value === ADMIN_PASSWORD) {
+        isAdmin = true;
+        showToast('已进入管理后台', 'success');
+        openAdminPanel();
+      } else showToast('密码错误', 'error');
+    }
+
+    async function loadAdminData() {
+      const codes = await supabaseFetch('invite_codes?select=*&order=created_at.desc&limit=100');
+      const reviews = await supabaseFetch('reviews?select=*&order=created_at.desc&limit=100');
+      renderAllCodes(codes);
+      renderAdminReviews(reviews);
+    }
+
+    function renderAllCodes(codes) {
+      document.getElementById('allCodesList').innerHTML = codes.length ? codes.map(c => `<span class="code-tag ${c.is_used?'used':''}" onclick="copyCode('${c.code}')">${c.code}${c.is_used?' (已用)':''}</span>`).join('') : '暂无邀请码';
+    }
+    function renderAdminReviews(reviews) {
+      const container = document.getElementById('adminReviewsList');
+      if (!reviews.length) { container.innerHTML = '<div>暂无评价</div>'; return; }
+      container.innerHTML = reviews.map(r => `<div class="admin-review-row">
+        <div class="admin-review-info"><b>${r.nickname||'匿名'}</b> <span style="color:#999;font-size:0.7rem;">${new Date(r.created_at).toLocaleDateString()}</span></div>
+        <div class="admin-review-actions">
+          <button class="btn btn-sm ${r.is_pinned?'btn-pin':'btn-outline'}" onclick="togglePin(${r.id},${r.is_pinned})">${r.is_pinned?'取消置顶':'置顶'}</button>
+          <button class="btn btn-sm ${r.is_hidden?'btn-outline':'btn-danger'}" onclick="toggleHidden(${r.id},${r.is_hidden})">${r.is_hidden?'显示':'隐藏'}</button>
+          <button class="btn btn-sm btn-warning" onclick="deleteReview(${r.id})">删除</button>
+        </div>
+      </div>`).join('');
+    }
+
+    async function togglePin(id, current) {
+      await supabaseFetch(`reviews?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ is_pinned: !current }) });
+      loadAdminData(); loadReviews();
+    }
+    async function toggleHidden(id, current) {
+      await supabaseFetch(`reviews?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ is_hidden: !current }) });
+      loadAdminData(); loadReviews();
+    }
+    async function deleteReview(id) {
+      if (!confirm('确定删除？')) return;
+      await supabaseFetch(`reviews?id=eq.${id}`, { method: 'DELETE' });
+      loadAdminData(); loadReviews();
+    }
+    async function generateInviteCodes() {
+      const count = parseInt(document.getElementById('genCodeCount').value) || 5;
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      const newCodes = [];
+      for (let i = 0; i < count; i++) {
+        let code = '';
+        for (let j = 0; j < 4; j++) code += chars[Math.floor(Math.random() * chars.length)];
+        newCodes.push({ code, is_used: false });
+      }
+      const result = await supabaseFetch('invite_codes', { method: 'POST', body: JSON.stringify(newCodes) });
+      document.getElementById('newCodesList').innerHTML = result.map(c => `<span class="code-tag" onclick="copyCode('${c.code}')">${c.code}</span>`).join('');
+      loadAdminData();
+    }
+    function copyCode(code) {
+      navigator.clipboard.writeText(code).then(() => showToast('已复制', 'success'));
+    }
+
+    loadReviews();
+  </script>
 </body>
 </html>
