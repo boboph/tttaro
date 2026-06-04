@@ -6,34 +6,80 @@
   <title>卜品Origo · 真实评价</title>
   <style>
     :root {
-      --brand-green: #07C160; --text-primary: #1a1a1a; --text-secondary: #6b6b6b;
-      --border: #e5e5e5; --radius: 16px; --font-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-      --size-body: 0.9rem; --size-small: 0.8rem; --size-brand: 1.8rem; --size-tagline: 0.95rem; --size-tab: 0.85rem;
+      --bg: #ffffff; --text-primary: #1a1a1a; --text-secondary: #6b6b6b;
+      --brand-green: #07C160; --brand-green-hover: #06ad56; --border: #e5e5e5;
+      --shadow: 0 4px 16px rgba(0,0,0,0.04); --radius: 16px;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --size-title: 1.2rem; --size-subtitle: 1.05rem; --size-body: 0.9rem;
+      --size-small: 0.8rem; --size-brand: 1.8rem; --size-tagline: 0.95rem; --size-tab: 0.85rem;
+      --line-height-relaxed: 1.7; --letter-spacing-base: 0.02em;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: var(--font-sans); background: #f9fafb; color: var(--text-primary); min-height: 100vh; line-height: 1.7; display: flex; flex-direction: column; align-items: center; }
+    body {
+      font-family: var(--font-sans); background: #f9fafb; color: var(--text-primary);
+      min-height: 100vh; line-height: var(--line-height-relaxed); letter-spacing: var(--letter-spacing-base);
+      -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased;
+      display: flex; flex-direction: column; align-items: center;
+    }
     .container { width: 100%; max-width: 480px; padding: 0 20px 40px; margin: 0 auto; }
     .header { text-align: center; padding: 32px 20px 8px; }
     .brand-name { font-size: var(--size-brand); font-weight: 700; color: #0f0f0f; margin-bottom: 8px; }
     .brand-tagline { font-size: var(--size-tagline); color: var(--text-secondary); margin-bottom: 12px; }
-    .tab-switch { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; }
-    .tab-btn { padding: 8px 14px; border-radius: 32px; font-size: var(--size-tab); font-weight: 600; background: white; border: 1px solid var(--border); color: var(--text-secondary); text-decoration: none; white-space: nowrap; }
+
+    .tab-switch { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: nowrap; }
+    .tab-btn {
+      padding: 8px 14px; border-radius: 32px; font-size: var(--size-tab); font-weight: 600;
+      background: white; border: 1px solid var(--border); color: var(--text-secondary);
+      text-decoration: none; white-space: nowrap; transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
     .tab-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); }
+
+    /* 来访者统计文字：居中，稍小 */
+    .visitor-feedback-text {
+      font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 20px; text-align: center;
+    }
+
     .reviews-list { display: flex; flex-direction: column; gap: 12px; }
-    .review-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
+    .review-card {
+      background: white; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px 16px; box-shadow: var(--shadow); transition: all 0.2s; position: relative;
+    }
     .review-card.pinned { border-left: 4px solid var(--brand-green); background: #fafdf8; }
-    .pinned-badge { background: var(--brand-green); color: white; font-size: 0.65rem; padding: 3px 10px; border-radius: 12px; }
+    .pinned-badge {
+      position: absolute; top: 10px; right: 10px; background: var(--brand-green); color: white;
+      font-size: 0.65rem; padding: 3px 10px; border-radius: 12px; font-weight: 500;
+    }
     .review-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .review-avatar { width: 38px; height: 38px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-weight: 600; }
-    .review-nickname { font-weight: 600; }
+    .review-avatar {
+      width: 38px; height: 38px; border-radius: 50%; background: #f0f0f0;
+      display: flex; align-items: center; justify-content: center; font-weight: 600;
+      font-size: 0.85rem; color: #4a4a4a; flex-shrink: 0;
+    }
+    .review-nickname { font-weight: 600; font-size: 0.95rem; color: #1f1f1f; }
     .review-time { margin-left: auto; font-size: 0.7rem; color: #aaa; }
-    .review-content { font-size: var(--size-body); color: #3a3a3a; line-height: 1.65; white-space: pre-wrap; word-break: break-word; }
+    .review-content {
+      font-size: var(--size-body); color: #3a3a3a; line-height: 1.65;
+      white-space: pre-wrap; word-break: break-word;
+    }
+    .empty-reviews { text-align: center; padding: 30px 20px; color: #aaa; font-size: var(--size-small); }
+
     .submit-area { margin-top: 32px; display: flex; justify-content: center; }
-    .btn-submit { background: var(--brand-green); color: white; border: none; border-radius: 36px; padding: 15px 40px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; max-width: 260px; }
+    .btn-submit {
+      background: var(--brand-green); color: white; border: none; border-radius: 36px;
+      padding: 15px 40px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em;
+      cursor: pointer; box-shadow: 0 4px 14px rgba(7,193,96,0.2); width: 100%; max-width: 260px;
+      transition: all 0.2s;
+    }
+    .btn-submit:active { background: var(--brand-green-hover); transform: scale(0.97); }
+
     .admin-entry { text-align: center; margin-top: 36px; }
     .admin-link { font-size: 0.65rem; color: #ccc; background: none; border: none; cursor: pointer; }
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    .modal { background: white; border-radius: var(--radius); padding: 28px 22px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; position: relative; }
+
+    /* 弹窗等样式 */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .modal { background: white; border-radius: var(--radius); padding: 28px 22px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
     .modal h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; text-align: center; }
     .close-btn { position: absolute; top: 12px; right: 18px; background: none; border: none; font-size: 28px; color: #999; cursor: pointer; }
     .form-group { margin-bottom: 18px; }
@@ -46,9 +92,11 @@
     .btn-warning { background: #f0ad4e; color: white; }
     .btn-pin { background: #8e44ad; color: white; }
     .btn-outline { background: white; border: 1px solid #ddd; color: #333; }
+
     .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 200; padding: 12px 28px; border-radius: 34px; font-size: 0.9rem; background: #333; color: white; }
     .toast-success { background: #07C160; }
     .toast-error { background: #e64340; }
+
     .admin-section { background: #f8f9fa; border-radius: 14px; padding: 18px; margin-bottom: 18px; border: 1px solid #eee; }
     .code-tag { display: inline-block; background: #eef6ee; border: 1px solid #c8e6c9; padding: 5px 12px; border-radius: 18px; font-size: 0.75rem; font-family: monospace; margin: 5px; color: #1e4620; cursor: pointer; }
     .code-tag.used { background: #f0f0f0; border-color: #ddd; color: #999; text-decoration: line-through; }
@@ -66,19 +114,30 @@
       <div class="brand-name">卜品Origo</div>
       <div class="brand-tagline">感谢选择相信，在这里每一次反馈都是真实的遇见。</div>
     </div>
+
     <div class="tab-switch">
       <a href="index.html" class="tab-btn">关于我</a>
       <a href="price.html" class="tab-btn">价目表</a>
       <a href="reviews.html" class="tab-btn active">真实评价</a>
     </div>
+
+    <!-- 来访者统计 -->
     <div class="visitor-feedback-text" id="visitorFeedbackText">加载中…</div>
-    <div class="reviews-list" id="reviewsList">
-      <div style="text-align:center;padding:28px;color:#999;"><div class="loading-spinner"></div><p>加载评价中…</p></div>
+
+    <!-- 评价列表容器 -->
+    <div class="reviews-list" id="reviewsList"></div>
+
+    <!-- 加载更多按钮（动态生成） -->
+
+    <div class="submit-area">
+      <button class="btn-submit" onclick="openReviewModal()">留下您的反馈</button>
     </div>
-    <div class="submit-area"><button class="btn-submit" onclick="openReviewModal()">留下您的反馈</button></div>
-    <div class="admin-entry"><button class="admin-link" onclick="openAdminLogin()">管理</button></div>
+    <div class="admin-entry">
+      <button class="admin-link" onclick="openAdminLogin()">管理</button>
+    </div>
   </div>
 
+  <!-- 评价提交弹窗 -->
   <div class="modal-overlay" id="reviewModal" style="display:none;">
     <div class="modal">
       <button class="close-btn" onclick="closeReviewModal()">×</button>
@@ -89,6 +148,8 @@
       <button class="btn btn-primary" id="submitBtn" onclick="submitReview()">提交反馈</button>
     </div>
   </div>
+
+  <!-- 管理登录弹窗 -->
   <div class="modal-overlay" id="adminLoginModal" style="display:none;">
     <div class="modal">
       <button class="close-btn" onclick="closeAdminLogin()">×</button>
@@ -97,21 +158,26 @@
       <button class="btn btn-primary" onclick="adminLogin()">进入后台</button>
     </div>
   </div>
+
+  <!-- 管理面板弹窗 -->
   <div class="modal-overlay" id="adminPanelModal" style="display:none;">
     <div class="modal" style="max-width:440px;">
       <button class="close-btn" onclick="closeAdminPanel()">×</button>
       <h2>管理后台</h2>
       <div class="admin-section">
-        <h3>生成邀请码</h3>
-        <div style="display:flex;gap:10px;"><input type="number" id="genCodeCount" value="5" min="1" max="20" style="width:70px;padding:10px;"><button class="btn btn-sm btn-primary" onclick="generateInviteCodes()">生成</button></div>
-        <div id="newCodesList" style="margin-top:12px;"></div>
+        <h3 style="font-size:0.9rem;margin-bottom:10px;">生成邀请码 (4位字母数字)</h3>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <input type="number" id="genCodeCount" value="5" min="1" max="20" style="width:70px;padding:10px;border:1px solid #ddd;border-radius:10px;text-align:center;">
+          <button class="btn btn-sm btn-primary" onclick="generateInviteCodes()">生成</button>
+        </div>
+        <div id="newCodesList" style="margin-top:12px;min-height:24px;"></div>
       </div>
       <div class="admin-section">
-        <h3>所有邀请码</h3>
+        <h3 style="font-size:0.9rem;margin-bottom:10px;">所有邀请码</h3>
         <div id="allCodesList" style="max-height:150px;overflow-y:auto;"></div>
       </div>
       <div class="admin-section">
-        <h3>评价管理</h3>
+        <h3 style="font-size:0.9rem;margin-bottom:10px;">评价管理</h3>
         <div id="adminReviewsList" style="max-height:350px;overflow-y:auto;"></div>
       </div>
       <button class="btn btn-outline btn-sm" style="width:100%;margin-top:12px;" onclick="closeAdminPanel()">关闭</button>
@@ -123,133 +189,277 @@
     const SUPABASE_ANON_KEY = 'sb_publishable_O8pCMhQmfXxbq8r7IN87Pw_QpY8liuo';
     const ADMIN_PASSWORD = '000000';
 
+    // 分页变量
+    let currentPage = 0;
+    const INITIAL_PAGE_SIZE = 50;    // 首次加载50条
+    const MORE_PAGE_SIZE = 10;       // 每次加载更多10条
+    let totalReviewCount = 0;
+    let isLoadingMore = false;
+
     async function supabaseFetch(path, options = {}) {
       const url = `${SUPABASE_URL}/rest/v1/${path}`;
-      const headers = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...options.headers };
+      const headers = {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation',
+        ...options.headers
+      };
       const res = await fetch(url, { ...options, headers });
       if (!res.ok) throw new Error(`请求失败: ${res.status}`);
-      return res.json();
+      const text = await res.text();
+      return text ? JSON.parse(text) : null;
     }
 
     let isAdmin = false;
+
     function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = ''; }
+
     function openReviewModal() {
       document.getElementById('reviewContent').value = '';
       document.getElementById('reviewNickname').value = '';
       document.getElementById('inviteCodeInput').value = '';
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('submitBtn').textContent = '提交反馈';
       openModal('reviewModal');
     }
     function closeReviewModal() { closeModal('reviewModal'); }
-    function openAdminLogin() { openModal('adminLoginModal'); }
+    function openAdminLogin() { document.getElementById('adminPassword').value = ''; openModal('adminLoginModal'); }
     function closeAdminLogin() { closeModal('adminLoginModal'); }
     function openAdminPanel() { closeModal('adminLoginModal'); openModal('adminPanelModal'); loadAdminData(); }
-    function closeAdminPanel() { closeModal('adminPanelModal'); loadReviews(); }
+    function closeAdminPanel() { closeModal('adminPanelModal'); isAdmin = false; loadReviews(true); }
 
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('modal-overlay')) {
-        if (e.target.id === 'reviewModal') closeReviewModal();
-        if (e.target.id === 'adminLoginModal') closeAdminLogin();
-        if (e.target.id === 'adminPanelModal') closeAdminPanel();
+        const id = e.target.id;
+        if (id === 'reviewModal') closeReviewModal();
+        if (id === 'adminLoginModal') closeAdminLogin();
+        if (id === 'adminPanelModal') closeAdminPanel();
       }
     });
 
-    function showToast(msg, type) {
+    function showToast(msg, type = 'info') {
       const toast = document.createElement('div');
-      toast.className = `toast toast-${type}`;
+      toast.className = `toast ${type === 'success' ? 'toast-success' : type === 'error' ? 'toast-error' : ''}`;
       toast.textContent = msg;
       document.body.appendChild(toast);
-      setTimeout(() => toast.remove(), 2500);
+      setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = '0.3s'; setTimeout(() => toast.remove(), 300); }, 2500);
     }
 
-    async function loadReviews() {
-      const container = document.getElementById('reviewsList');
+    // 获取评价总数（用于统计）
+    async function fetchTotalCount() {
       try {
-        const reviews = await supabaseFetch('reviews?select=*&is_hidden=eq.false&order=is_pinned.desc,created_at.desc&limit=50');
-        if (!reviews.length) {
-          container.innerHTML = '<div class="empty-reviews">暂无反馈，期待你的第一条真实感受</div>';
-          return;
-        }
-        container.innerHTML = reviews.map(r => {
-          const initial = (r.nickname || '匿')[0].toUpperCase();
-          const time = new Date(r.created_at).toLocaleDateString();
-          return `<div class="review-card ${r.is_pinned ? 'pinned' : ''}">
-            ${r.is_pinned ? '<span class="pinned-badge">置顶</span>' : ''}
-            <div class="review-header"><div class="review-avatar">${initial}</div><span class="review-nickname">${r.nickname || '匿名'}</span><span class="review-time">${time}</span></div>
-            <div class="review-content">${r.content}</div>
-          </div>`;
-        }).join('');
-        document.getElementById('visitorFeedbackText').textContent = `已有${reviews.length}位来访者，在这里留下他们的反馈。`;
+        const result = await supabaseFetch('reviews?select=id&is_hidden=eq.false');
+        return result ? result.length : 0;
       } catch (e) {
-        container.innerHTML = '<div class="empty-reviews">加载失败，请稍后再试</div>';
+        return 0;
       }
     }
 
+    // 加载评价（支持分页）
+    async function loadReviews(reset = false) {
+      if (reset) {
+        currentPage = 0;
+        document.getElementById('reviewsList').innerHTML = '';
+        document.getElementById('loadMoreBtn')?.remove();
+        totalReviewCount = await fetchTotalCount();
+        updateVisitorCount(totalReviewCount);
+        if (totalReviewCount === 0) {
+          document.getElementById('reviewsList').innerHTML = '<div class="empty-reviews">暂无反馈，期待你的第一条真实感受</div>';
+          return;
+        }
+      }
+
+      if (isLoadingMore) return;
+      isLoadingMore = true;
+
+      const container = document.getElementById('reviewsList');
+      const spinner = document.createElement('div');
+      spinner.innerHTML = '<div style="text-align:center;padding:20px;"><div class="loading-spinner"></div></div>';
+      spinner.id = 'loadMoreSpinner';
+      container.appendChild(spinner);
+
+      try {
+        const pageSize = currentPage === 0 ? INITIAL_PAGE_SIZE : MORE_PAGE_SIZE;
+        const from = currentPage * INITIAL_PAGE_SIZE + (currentPage > 0 ? (currentPage - 1) * MORE_PAGE_SIZE : 0);
+        // 简化的偏移计算：首次 offset=0, limit=50; 第二次 offset=50, limit=10; 第三次 offset=60, limit=10...
+        const offset = currentPage === 0 ? 0 : INITIAL_PAGE_SIZE + (currentPage - 1) * MORE_PAGE_SIZE;
+
+        const reviews = await supabaseFetch(
+          `reviews?select=*&is_hidden=eq.false&order=is_pinned.desc,created_at.desc&limit=${pageSize}&offset=${offset}`
+        );
+
+        document.getElementById('loadMoreSpinner')?.remove();
+
+        if (!reviews || reviews.length === 0) {
+          if (currentPage === 0) {
+            container.innerHTML = '<div class="empty-reviews">暂无反馈，期待你的第一条真实感受</div>';
+          }
+          document.getElementById('loadMoreBtn')?.remove();
+          return;
+        }
+
+        if (currentPage === 0) {
+          container.innerHTML = '';
+        }
+
+        reviews.forEach(r => {
+          const initial = (r.nickname || '匿')[0].toUpperCase();
+          const time = formatTime(r.created_at);
+          const card = document.createElement('div');
+          card.className = `review-card ${r.is_pinned ? 'pinned' : ''}`;
+          card.innerHTML = `
+            ${r.is_pinned ? '<span class="pinned-badge">置顶</span>' : ''}
+            <div class="review-header">
+              <div class="review-avatar">${initial}</div>
+              <span class="review-nickname">${escapeHTML(r.nickname || '匿名')}</span>
+              <span class="review-time">${time}</span>
+            </div>
+            ${r.content ? `<div class="review-content">${escapeHTML(r.content)}</div>` : ''}
+          `;
+          container.appendChild(card);
+        });
+
+        // 更新统计数（仅首次）
+        if (currentPage === 0) {
+          totalReviewCount = await fetchTotalCount();
+          updateVisitorCount(totalReviewCount);
+        }
+
+        // 是否还有更多评价
+        const loadedSoFar = currentPage === 0 ? reviews.length : INITIAL_PAGE_SIZE + (currentPage - 1) * MORE_PAGE_SIZE + reviews.length;
+        if (totalReviewCount > loadedSoFar) {
+          let loadMoreBtn = document.getElementById('loadMoreBtn');
+          if (!loadMoreBtn) {
+            loadMoreBtn = document.createElement('button');
+            loadMoreBtn.id = 'loadMoreBtn';
+            loadMoreBtn.className = 'btn-submit';
+            loadMoreBtn.textContent = '加载更多评价';
+            loadMoreBtn.style.marginTop = '20px';
+            loadMoreBtn.onclick = () => {
+              currentPage++;
+              loadReviews(false);
+            };
+            container.appendChild(loadMoreBtn);
+          }
+        } else {
+          document.getElementById('loadMoreBtn')?.remove();
+        }
+
+        if (currentPage === 0) currentPage++;
+      } catch (e) {
+        container.innerHTML = '<div class="empty-reviews">暂时无法加载评价，请稍后再试</div>';
+      } finally {
+        isLoadingMore = false;
+      }
+    }
+
+    function updateVisitorCount(count) {
+      const el = document.getElementById('visitorFeedbackText');
+      if (el) el.textContent = count > 0 ? `已有${count}位来访者，在这里留下他们的反馈。` : '期待第一位来访者的反馈';
+    }
+
+    function formatTime(d) {
+      if (!d) return '';
+      const n = new Date(), diff = n - new Date(d);
+      const m = Math.floor(diff/60000), h = Math.floor(diff/3600000), day = Math.floor(diff/86400000);
+      if (m<1) return '刚刚';
+      if (m<60) return m+'分钟前';
+      if (h<24) return h+'小时前';
+      if (day<30) return day+'天前';
+      return `${new Date(d).getFullYear()}-${String(new Date(d).getMonth()+1).padStart(2,'0')}-${String(new Date(d).getDate()).padStart(2,'0')}`;
+    }
+
+    function escapeHTML(s) {
+      const div = document.createElement('div');
+      div.textContent = s;
+      return div.innerHTML;
+    }
+
+    // 提交评价（保持不变）
     async function submitReview() {
       const code = document.getElementById('inviteCodeInput').value.trim().toUpperCase();
       const nickname = document.getElementById('reviewNickname').value.trim() || '匿名';
       const content = document.getElementById('reviewContent').value.trim();
+      const btn = document.getElementById('submitBtn');
       if (!code) return showToast('请输入邀请码', 'error');
       if (!content) return showToast('请填写评价内容', 'error');
+      btn.disabled = true; btn.textContent = '提交中…';
       try {
         const codes = await supabaseFetch(`invite_codes?code=eq.${encodeURIComponent(code)}&is_used=eq.false&limit=1`);
-        if (!codes.length) return showToast('邀请码无效或已被使用', 'error');
-        await supabaseFetch(`invite_codes?id=eq.${codes[0].id}`, { method: 'PATCH', body: JSON.stringify({ is_used: true }) });
+        if (!codes || codes.length === 0) {
+          showToast('邀请码无效或已被使用', 'error');
+          btn.disabled = false; btn.textContent = '提交反馈';
+          return;
+        }
+        const inviteId = codes[0].id;
+        await supabaseFetch(`invite_codes?id=eq.${inviteId}`, { method: 'PATCH', body: JSON.stringify({ is_used: true }) });
         await supabaseFetch('reviews', { method: 'POST', body: JSON.stringify({ nickname, rating: 5, content, is_hidden: false, is_pinned: false }) });
         showToast('反馈提交成功！', 'success');
         closeReviewModal();
-        loadReviews();
+        loadReviews(true); // 重新加载第一页
       } catch (e) {
+        console.error(e);
         showToast('提交失败，请重试', 'error');
+      } finally {
+        btn.disabled = false; btn.textContent = '提交反馈';
       }
     }
 
     function adminLogin() {
       if (document.getElementById('adminPassword').value === ADMIN_PASSWORD) {
-        isAdmin = true;
-        showToast('已进入管理后台', 'success');
-        openAdminPanel();
+        isAdmin = true; showToast('已进入管理后台', 'success'); openAdminPanel();
       } else showToast('密码错误', 'error');
     }
 
     async function loadAdminData() {
-      const codes = await supabaseFetch('invite_codes?select=*&order=created_at.desc&limit=100');
-      const reviews = await supabaseFetch('reviews?select=*&order=created_at.desc&limit=100');
-      renderAllCodes(codes);
-      renderAdminReviews(reviews);
+      try {
+        const codes = await supabaseFetch('invite_codes?select=*&order=created_at.desc&limit=100');
+        const reviews = await supabaseFetch('reviews?select=*&order=created_at.desc&limit=100');
+        renderAllCodes(codes || []); renderAdminReviews(reviews || []);
+      } catch (e) { showToast('加载管理数据失败', 'error'); }
     }
 
     function renderAllCodes(codes) {
-      document.getElementById('allCodesList').innerHTML = codes.length ? codes.map(c => `<span class="code-tag ${c.is_used?'used':''}" onclick="copyCode('${c.code}')">${c.code}${c.is_used?' (已用)':''}</span>`).join('') : '暂无邀请码';
+      const el = document.getElementById('allCodesList');
+      if (!el) return;
+      el.innerHTML = codes.length ? codes.map(c => `<span class="code-tag ${c.is_used?'used':''}" onclick="copyCode('${c.code}')">${c.code}${c.is_used?' (已用)':''}</span>`).join('') : '暂无邀请码';
     }
+
     function renderAdminReviews(reviews) {
       const container = document.getElementById('adminReviewsList');
-      if (!reviews.length) { container.innerHTML = '<div>暂无评价</div>'; return; }
-      container.innerHTML = reviews.map(r => `<div class="admin-review-row">
-        <div class="admin-review-info"><b>${r.nickname||'匿名'}</b> <span style="color:#999;font-size:0.7rem;">${new Date(r.created_at).toLocaleDateString()}</span></div>
-        <div class="admin-review-actions">
-          <button class="btn btn-sm ${r.is_pinned?'btn-pin':'btn-outline'}" onclick="togglePin(${r.id},${r.is_pinned})">${r.is_pinned?'取消置顶':'置顶'}</button>
-          <button class="btn btn-sm ${r.is_hidden?'btn-outline':'btn-danger'}" onclick="toggleHidden(${r.id},${r.is_hidden})">${r.is_hidden?'显示':'隐藏'}</button>
-          <button class="btn btn-sm btn-warning" onclick="deleteReview(${r.id})">删除</button>
-        </div>
-      </div>`).join('');
+      if (!container) return;
+      if (!reviews.length) { container.innerHTML = '<div style="padding:8px;color:#999;">暂无评价</div>'; return; }
+      container.innerHTML = reviews.map(r => `
+        <div class="admin-review-row">
+          <div class="admin-review-info"><b>${escapeHTML(r.nickname||'匿名')}</b>${r.is_pinned?'<span class="pin-indicator">📌置顶</span>':''}<span style="color:#999;font-size:0.7rem;margin-left:6px;">${formatTime(r.created_at)}</span>${r.is_hidden?'<span style="color:#e65050;font-size:0.65rem;">[已隐藏]</span>':''}<div style="font-size:0.8rem;color:#555;">${escapeHTML((r.content||'').substring(0,30))}…</div></div>
+          <div class="admin-review-actions">
+            <button class="btn btn-sm ${r.is_pinned?'btn-pin':'btn-outline'}" onclick="togglePin(${r.id},${r.is_pinned})">${r.is_pinned?'取消置顶':'置顶'}</button>
+            <button class="btn btn-sm ${r.is_hidden?'btn-outline':'btn-danger'}" onclick="toggleHidden(${r.id},${r.is_hidden})">${r.is_hidden?'显示':'隐藏'}</button>
+            <button class="btn btn-sm btn-warning" onclick="deleteReview(${r.id})">删除</button>
+          </div>
+        </div>`).join('');
     }
 
     async function togglePin(id, current) {
       await supabaseFetch(`reviews?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ is_pinned: !current }) });
-      loadAdminData(); loadReviews();
+      loadAdminData(); loadReviews(true);
     }
+
     async function toggleHidden(id, current) {
       await supabaseFetch(`reviews?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ is_hidden: !current }) });
-      loadAdminData(); loadReviews();
+      loadAdminData(); loadReviews(true);
     }
+
     async function deleteReview(id) {
-      if (!confirm('确定删除？')) return;
+      if (!confirm('确定要永久删除这条评价吗？')) return;
       await supabaseFetch(`reviews?id=eq.${id}`, { method: 'DELETE' });
-      loadAdminData(); loadReviews();
+      showToast('评价已删除', 'success'); loadAdminData(); loadReviews(true);
     }
+
     async function generateInviteCodes() {
-      const count = parseInt(document.getElementById('genCodeCount').value) || 5;
+      const count = Math.min(20, Math.max(1, parseInt(document.getElementById('genCodeCount').value) || 5));
       const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
       const newCodes = [];
       for (let i = 0; i < count; i++) {
@@ -257,15 +467,23 @@
         for (let j = 0; j < 4; j++) code += chars[Math.floor(Math.random() * chars.length)];
         newCodes.push({ code, is_used: false });
       }
-      const result = await supabaseFetch('invite_codes', { method: 'POST', body: JSON.stringify(newCodes) });
-      document.getElementById('newCodesList').innerHTML = result.map(c => `<span class="code-tag" onclick="copyCode('${c.code}')">${c.code}</span>`).join('');
-      loadAdminData();
-    }
-    function copyCode(code) {
-      navigator.clipboard.writeText(code).then(() => showToast('已复制', 'success'));
+      try {
+        const result = await supabaseFetch('invite_codes', { method: 'POST', body: JSON.stringify(newCodes) });
+        const createdCodes = result || newCodes;
+        document.getElementById('newCodesList').innerHTML = createdCodes.map(c => `<span class="code-tag" onclick="copyCode('${c.code}')">${c.code}</span>`).join('');
+        showToast(`已生成 ${createdCodes.length} 个邀请码`, 'success'); loadAdminData();
+      } catch (e) { showToast('生成失败，请重试', 'error'); }
     }
 
-    loadReviews();
+    function copyCode(code) {
+      navigator.clipboard?.writeText(code).then(() => showToast('已复制: ' + code)).catch(() => {
+        const ta = document.createElement('textarea'); ta.value = code; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta); showToast('已复制');
+      });
+    }
+
+    // 首次加载
+    loadReviews(true);
   </script>
 </body>
 </html>
