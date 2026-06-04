@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="zh-CN"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;卜品Origo · 价目表&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--bg: #ffffff; --text-primary: #1a1a1a; --text-secondary: #6b6b6b; --text-muted: #9a9a9a;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--brand-green: #07C160; --brand-green-hover: #06ad56; --border: #e5e5e5;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--shadow: 0 4px 16px rgba(0,0,0,0.04); --radius: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--size-title: 1.2rem; --size-subtitle: 1.05rem; --size-body: 0.9rem; --size-small: 0.8rem;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--size-price: 1.1rem; --size-brand: 1.8rem; --size-tagline: 0.95rem; --size-tab: 0.85rem;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>--line-height-relaxed: 1.75; --letter-spacing-base: 0.02em;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>* { margin: 0; padding: 0; box-sizing: border-box; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: var(--font-sans); background: #f9fafb; color: var(--text-primary);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>min-height: 100vh; line-height: var(--line-height-relaxed); letter-spacing: var(--letter-spacing-base);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>-webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex; flex-direction: column; align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.container { width: 100%; max-width: 480px; padding: 0 20px 40px; margin: 0 auto; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header { text-align: center; padding: 32px 20px 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.brand-name { font-size: var(--size-brand); font-weight: 700; letter-spacing: 0.05em; color: #0f0f0f; margin-bottom: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.brand-tagline { font-size: var(--size-tagline); color: var(--text-secondary); letter-spacing: 0.03em; margin-bottom: 12px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.tab-switch { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: nowrap; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.tab-btn {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 8px 14px; border-radius: 32px; font-size: var(--size-tab); font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: white; border: 1px solid var(--border); color: var(--text-secondary);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>letter-spacing: 0.02em; cursor: pointer; transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>-webkit-tap-highlight-color: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.02);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>white-space: nowrap; text-decoration: none; display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.tab-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.price-sub-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.price-sub-tab { padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; background: white; border: 1px solid var(--border); color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.price-sub-tab.active { background: var(--brand-green); color: white; border-color: var(--brand-green); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.price-list { display: flex; flex-direction: column; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.price-item { padding: 18px 0; border-bottom: 1px solid #f0f0f0; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.price-item:last-child { border-bottom: none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.price-item h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: #0f0f0f; display: flex; justify-content: space-between; align-items: baseline; letter-spacing: 0.02em; line-height: 1.4; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.price-item h4 span { font-size: var(--size-price); color: var(--brand-green); font-weight: 700; white-space: nowrap; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.price-item p { font-size: var(--size-body); color: #555; line-height: 1.7; margin: 0; letter-spacing: 0.02em; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.highlight-text { color: var(--brand-green); font-weight: 600; margin-top: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="brand-name"&gt;卜品Origo&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="brand-tagline"&gt;感谢选择相信，在这里每一次反馈都是真实的遇见。&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tab-switch"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a href="index.html" class="tab-btn"&gt;关于我&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a href="price.html" class="tab-btn active"&gt;价目表&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a href="reviews.html" class="tab-btn"&gt;真实评价&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="price-sub-tabs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="price-sub-tab active" onclick="switchPriceSubTab('online')"&gt;线上价目表&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="price-sub-tab" onclick="switchPriceSubTab('offline')"&gt;线下价目表&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 线上价目表 --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="price-online" class="price-list" style="display:block;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;纯聊天疏导 / 深度问题分析 &lt;span&gt;288/小时&lt;/span&gt;&lt;/h4&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;卜品Origo 四季牌阵 · 季度运势 &lt;span&gt;预约专属价 138&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;专为季度整体运势打造的经典牌阵&lt;br&gt;以春分、夏至、秋分、冬至为时间节点&lt;br&gt;全面覆盖事业、感情、人际、财运、健康等核心生活领域&lt;br&gt;四季牌阵目前仅接受预约&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;运势 &lt;span&gt;60 (3个月) / 120 (6个月)&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;单项运势为简单解读，内容较为宽泛&lt;br&gt;仅适合有明确时间节点需求的情况，其余场景不推荐&lt;br&gt;运势类服务仅推荐四季牌阵，可做全面综合运势分析&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;人际关系 &lt;span&gt;140&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;所有人际关系问题均可&lt;br&gt;包括但不限于暧昧/情侣/sm/同事/朋友…&lt;br&gt;LGBT恋爱请提前说明属性&lt;br&gt;双方之间的问题都能回答&lt;br&gt;小三上位不看，被我发现一律拉黑处理&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;工作问题 &lt;span&gt;160&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;工作上的一些复杂问题&lt;br&gt;例如三方合作参与、工作发展等&lt;br&gt;更多是对于事情发展本身的分析&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;选择问题 / 二选一 &lt;span&gt;140起&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;针对选择困难症的牌阵&lt;br&gt;有两个选项或多个选项进行分析&lt;br&gt;多一个选项 +30&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;其他简单问题 &lt;span&gt;88&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;简单问题，接单处理&lt;br&gt;这是我自己按心情收费的价格表&lt;br&gt;如果你一上来就问我能不能看，那就是不能看&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;人类图 &lt;span&gt;140&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;了解自身的运作模式，打卡自己的使用说明&lt;br&gt;以及近期的生活状态：工作、情感、人际关系…&lt;/p&gt;&lt;p class="highlight-text"&gt;灵魂拷问：你愿意给自己花140，还是愿意给他人花140？&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 线下价目表 --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="price-offline" class="price-list" style="display:none;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h4&gt;线下专享 &lt;span&gt;🍵&lt;/span&gt;&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;到店即赠茶饮一份。&lt;br&gt;&lt;br&gt;线下约单以转账为准，口头约定时间不预留，被占概不负责。&lt;br&gt;转账后协商咨询时间，变动请提前告知。&lt;br&gt;「双师共解」 「三堂会审」 需至少提前一天预约，临时无法接待。&lt;br&gt;塔罗牌当天有时间可现场咨询。&lt;br&gt;咨询中提问越多，挖掘信息越多，挖掘多少取决于你的承受度。&lt;br&gt;&lt;br&gt;一事一问：单项问题，单项回答。例如：问工作就只能回答工作方面的问题，不能回答爱情方面的问题，这是两个范畴。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;纯聊天疏导 / 深度问题分析 &lt;span&gt;300/小时&lt;/span&gt;&lt;/h4&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;塔罗牌 &lt;span&gt;88/20~30分钟&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;简单问题，简单处理&lt;br&gt;这是我自己按心情收费的价格&lt;br&gt;如果你一上来就问我能不能看&lt;br&gt;那就是不能看。&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;塔罗牌 &lt;span&gt;168/30~40分钟&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;根据问题设计牌阵解读&lt;br&gt;会挖细节，能回答的都会回答&lt;br&gt;可以拍照保留牌阵图片&lt;br&gt;解读后如还有疑问可随时答疑。&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;塔罗牌（老客户） &lt;span&gt;388/60分钟&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;一小时随便问&lt;br&gt;可以问爱情，工作，人际关系……&lt;br&gt;不限制方向，可以多次开牌阵&lt;br&gt;直接提取关键信息回答。&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;双师共解 &lt;span&gt;288/30~60分钟&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;塔罗牌 + 六爻双工具组合解答&lt;br&gt;信息会有交叠，互为补充&lt;br&gt;两个人在场解读。&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;三堂会审 &lt;span&gt;318/40~80分钟&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;塔罗牌，六爻，雷洛曼三工具组合解答&lt;br&gt;一件事，三套工具，交叉验证&lt;br&gt;三个人在场解读。&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="price-item"&gt;&lt;h4&gt;人类图 &lt;span&gt;168/30~40分钟&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;了解自身的运作模式&lt;br&gt;打卡自己的使用说明&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function switchPriceSubTab(tabName) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.querySelectorAll('.price-sub-tab').forEach(btn =&gt; btn.classList.remove('active'));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.querySelectorAll('.price-list').forEach(el =&gt; el.style.display = 'none');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById(`price-${tabName}`).style.display = 'block';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>event.target.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
